@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
-import './ReviewScreen.css'; 
+import React, { useState } from "react";
+import "./ReviewScreen.css"; 
 
 import starEmpty from "./assets/star-empty.svg";
-import starFilled from './assets/star-filled.svg';
-import starError from './assets/star-error.svg';
+import starFilled from "./assets/star-filled.svg";
 
 function ReviewScreen({ product, submitReview }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [rating, setRating] = useState(0);
-  const [reviewText, setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState("");
   const [reviewError, setReviewError] = useState(false); 
   const [ratingError, setRatingError] = useState("");
 
   const handleStarClick = (starNumber) => {
     setRating(starNumber);
     if (currentStep === 1) setRatingError(false); 
+  };
+
+  const submitReview_ = () => {
+    if (reviewText.trim().length >= 100) {
+      localStorage.setItem(`review_${product.id}`, JSON.stringify({ rating, reviewText }));
+      setCurrentStep(currentStep + 1);
+      submitReview();
+    } else {
+      setReviewError(true); 
+    }
   };
 
   const goToNextStep = () => {
@@ -51,9 +60,9 @@ function ReviewScreen({ product, submitReview }) {
         <div className="progress-bar" style={{ width: `${currentStep / 3 * 100}%` }}></div>
       </div>
       <div className="steps">
-        <div className={`step ${currentStep === 1 ? 'active' : ''}`}>1 Rating</div>
-        <div className={`step ${currentStep === 2 ? 'active' : ''}`}>2 Review</div>
-        <div className={`step ${currentStep === 3 ? 'active' : ''}`}>3 Summary</div>
+        <div className={`step ${currentStep === 1 ? "active" : ""}`}>1 Rating</div>
+        <div className={`step ${currentStep === 2 ? "active" : ""}`}>2 Review</div>
+        <div className={`step ${currentStep === 3 ? "active" : ""}`}>3 Summary</div>
       </div>
       {currentStep === 1 && (
         <div className="review-step">
@@ -73,7 +82,7 @@ function ReviewScreen({ product, submitReview }) {
             className="review-textarea"
           />
           {reviewError && <div className="error-message">Review must be at least 100 characters.</div>}
-          <button className="next-btn" onClick={submitReview}>Submit</button>
+          <button className="next-btn" onClick={submitReview_}>Submit</button>
         </div>
       )}
     </div>

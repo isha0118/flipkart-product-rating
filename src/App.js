@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import ProductList from './ProductList';
-import ReviewScreen from './ReviewScreen';
-import Header from './Header';
-import './App.css';
+import React, { useState } from "react";
+import ProductList from "./ProductList";
+import ReviewScreen from "./ReviewScreen";
+import Header from "./Header";
+import "./App.css";
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
