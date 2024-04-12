@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Loader from "./ Loader";
-import "./ProductList.css";
+import "././styles/ProductList.css";
 import errorIcon from "./assets/error.png";
 
-function ProductList({ onSelectProduct, onLoadingComplete, selectedProductId }) {
+function ProductList({ onSelectProduct, selectedProductId }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,9 +17,6 @@ function ProductList({ onSelectProduct, onLoadingComplete, selectedProductId }) 
     setError(null);
     try {
       const response = await fetch("https://65e60da8d7f0758a76e8083a.mockapi.io/api/products");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       const data = await response.json();
       const finalData = data.map((obj, i) => {
         return { ...obj, id: i };
@@ -29,12 +26,11 @@ function ProductList({ onSelectProduct, onLoadingComplete, selectedProductId }) 
       setError(error.message);
     } finally {
       setLoading(false);
-      onLoadingComplete && onLoadingComplete(); 
     }
   };
 
   const getImageUrl = (url, width, height, quality) => {
-    return url.replace("{@width}", width).replace("{@height}", height).replace("{@quality}", quality);
+    return url.replace(`{@width}`, width).replace(`{@height}`, height).replace(`{@quality}`, quality);
   };
 
   if (loading) return <Loader />;
