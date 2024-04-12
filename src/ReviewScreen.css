@@ -40,3 +40,25 @@
     cursor: pointer;
   }
   
+  .next-btn {
+    padding: 10px 20px;
+    background-color: #29a01d;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .review-textarea {
+    width: 100%;
+    margin-top: 10px;
+    /* other styles as needed */
+  }
+  

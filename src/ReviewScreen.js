@@ -10,15 +10,38 @@ function ReviewScreen({ product }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
-  const [ratingError, setRatingError] = useState(false);
+  const [reviewError, setReviewError] = useState(false); // State to manage review error
+  const [ratingError, setRatingError] = useState("");
 
   // Function to handle star click
   const handleStarClick = (starNumber) => {
     setRating(starNumber);
-    setRatingError(false); // Reset error when user selects a rating
+    if (currentStep === 1) setRatingError(false); // Reset error when user selects a rating
   };
 
-  // Function to render star images
+  // Function to go to next step
+  const goToNextStep = () => {
+    if (currentStep === 1 && rating === 0) {
+      setRatingError(true); // Show error if no rating given
+    } else if (currentStep === 2 && reviewText.trim().length < 100) {
+      setReviewError(true); // Show error if review text is less than 100 characters
+    } else {
+      setReviewError(false);
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  // Function to submit the review
+  const submitReview = () => {
+    if (reviewText.trim().length >= 100) {
+      // Save review to local storage or state
+      localStorage.setItem(`review_${product.id}`, JSON.stringify({ rating, reviewText }));
+      setCurrentStep(currentStep + 1); // Move to summary step or handle as needed
+    } else {
+      setReviewError(true); // Show error if review text is less than 100 characters
+    }
+  };
+
   const renderStars = () => {
     let stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -35,24 +58,6 @@ function ReviewScreen({ product }) {
     return stars;
   };
 
-  // Function to go to next step
-  const goToNextStep = () => {
-    if (currentStep === 1 && rating === 0) {
-      setRatingError(true); // Show error if no rating given
-    } else {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  // Function to go to previous step
-  const goToPreviousStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  // Function to submit the review
-  const submitReview = () => {
-    // Validate the review text and submit the review
-  };
 
   return (
     <div className="review-screen">
@@ -68,11 +73,28 @@ function ReviewScreen({ product }) {
         <div className="rating-step">
           <p>Please provide your rating</p>
           <div className="stars">{renderStars()}</div>
-          {ratingError && <img src={starError} alt="Error" className="error-icon" />}
+          {ratingError && <div className="error-message">Please select a star rating.</div>}
           <button className="next-btn" onClick={goToNextStep}>Next</button>
         </div>
       )}
-      {/* Handle additional steps (2 and 3) here */}
+      {currentStep === 2 && (
+        <div className="review-step">
+          <p>Please write your review (100 characters minimum)</p>
+          <textarea 
+            value={reviewText} 
+            onChange={(e) => setReviewText(e.target.value)} 
+            maxLength="1000" // Set maximum length to your preference
+            className="review-textarea"
+          />
+          {reviewError && <div className="error-message">Review must be at least 100 characters.</div>}
+          <button className="next-btn" onClick={submitReview}>Submit</button>
+        </div>
+      )}
+      {currentStep === 3 && (
+        <div className="summary-step">
+          {/* Summary content */}
+        </div>
+      )}
     </div>
   );
 }
