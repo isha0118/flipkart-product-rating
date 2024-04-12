@@ -1,0 +1,15 @@
+.productList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .productItem {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .productItem:hover {
+    background-color: #f0f0f0;
+  }
+  

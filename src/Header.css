@@ -1,0 +1,13 @@
+.header {
+    background-color: #2874f0; /* Specific blue color for the header */
+    padding: 10px 20px; /* Add some padding */
+    color: white; /* White text color */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Align items vertically in the center */
+  }
+  
+  .logo {
+    height: 40px; /* Set a fixed height for the logo */
+    width: auto; /* Maintain aspect ratio */
+  }
+  

@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import ProductList from './ProductList';
+import ReviewScreen from './ReviewScreen';
+import Header from './Header';
+// import Loader from './Loader'; // Import the Loader component
 import './App.css';
 
 function App() {
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
+  // Example function that gets called when the ProductList has finished fetching
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <main className="appContainer">
+      <section className="section">
+            {/* Pass the loading complete handler to ProductList */}
+            <ProductList onSelectProduct={setSelectedProduct} onLoadingComplete={handleLoadingComplete} />
+          </section>
+        <aside className="aside">
+          {selectedProduct && <ReviewScreen product={selectedProduct} />}
+        </aside>
+      </main>
+    </>
   );
 }
 
