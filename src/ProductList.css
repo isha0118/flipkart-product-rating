@@ -7,9 +7,62 @@
     cursor: pointer;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+
+    & p{
+        margin: 0;
+    }
+
+    & h3 {
+        margin: 10px 0px;
+    }
   }
   
   .productItem:hover {
     background-color: #f0f0f0;
   }
+  .errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Fill the viewport height */
+  }
   
+  .errorIcon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .errorMessage {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .retryButton {
+    padding: 10px 20px;
+    background-color: #2874f0; /* Flipkart blue */
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .retryButton:hover {
+    background-color: #0a5ecb; /* Darker blue on hover */
+  }
+
+  .rnp {
+    display: flex;
+    justify-content: flex-start;
+    margin: 5px 0px;
+  }
+
+  .rating {
+    margin-right: 10px !important;
+    display: block;
+    background-color: #2f9e44;
+    width: 50px;
+    text-align: center;
+    border-radius: 5px;
+  }
