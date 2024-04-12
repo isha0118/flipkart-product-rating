@@ -1,8 +1,5 @@
 import React from 'react';
-import './Header.css'; // Importing the CSS for styling
-
-// Assuming you have the Flipkart logo saved in your project under src/assets/
-// If you don't have a logo, you can use any placeholder image or download the Flipkart logo and place it correctly.
+import './Header.css'; 
 import flipkartLogo from "./assets/flipkart-logo-39904.png"
 
 function Header() {

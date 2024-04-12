@@ -13,8 +13,8 @@ function ProductList({ onSelectProduct, onLoadingComplete, selectedProductId }) 
   }, []);
 
   const fetchProducts = async () => {
-    setLoading(true); // Set loading to true when the fetch starts
-    setError(null); // Reset the error state on every call
+    setLoading(true); 
+    setError(null);
     try {
       const response = await fetch('https://65e60da8d7f0758a76e8083a.mockapi.io/api/products');
       if (!response.ok) {
@@ -28,8 +28,8 @@ function ProductList({ onSelectProduct, onLoadingComplete, selectedProductId }) 
     } catch (error) {
       setError(error.message);
     } finally {
-      setLoading(false); // Set loading to false when the fetch is complete
-      onLoadingComplete && onLoadingComplete(); // Notify parent component that loading is complete
+      setLoading(false);
+      onLoadingComplete && onLoadingComplete(); 
     }
   };
 

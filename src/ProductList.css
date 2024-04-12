@@ -16,9 +16,9 @@
         margin: 10px 0px;
     }
   }
-  
+
   .productItem.selected {
-    background-color: #f0f0f0; /* Or any other greyish tone to match the design */
+    background-color: #f0f0f0; 
   }
   
   .productItem:hover {
@@ -29,7 +29,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Fill the viewport height */
+    height: 100vh; 
   }
   
   .errorIcon {
@@ -44,7 +44,7 @@
   
   .retryButton {
     padding: 10px 20px;
-    background-color: #2874f0; /* Flipkart blue */
+    background-color: #2874f0; 
     border: none;
     color: white;
     font-size: 16px;
@@ -53,7 +53,7 @@
   }
   
   .retryButton:hover {
-    background-color: #0a5ecb; /* Darker blue on hover */
+    background-color: #0a5ecb; 
   }
 
   .rnp {

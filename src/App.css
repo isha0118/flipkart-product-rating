@@ -1,7 +1,7 @@
 .appContainer {
   display: flex;
   justify-content: space-between;
-  transition: all 0.3s ease; /* Optional: for smooth transition */
+  transition: all 0.3s ease; 
 }
 
 .fullWidthSection {
