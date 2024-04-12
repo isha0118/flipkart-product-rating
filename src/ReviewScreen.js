@@ -64,9 +64,6 @@ function ReviewScreen({ product, submitReview }) {
 
   return (
     <div className="review-screen">
-      {/* <div className="progress-bar-container">
-        <div className="progress-bar" style={{ width: `${currentStep / 3 * 100}%` }}></div>
-      </div> */}
       <div className="steps">
         <div className={`step ${currentStep === 1 ? "active" : ""}`}>1 Rating</div>
         <div className={`step ${currentStep === 2 ? "active" : ""}`}>2 Review</div>

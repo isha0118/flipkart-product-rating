@@ -31,12 +31,6 @@
     margin-top: 10px;
     height: 200px;
   }
-  
-  .progress-bar-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
 
   .steps {
     display: flex;
