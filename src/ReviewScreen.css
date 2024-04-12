@@ -15,13 +15,9 @@
     margin: 10px 0;
   }
   
-  .reviewButton {
-    padding: 10px 15px;
-    margin-right: 10px;
-    cursor: pointer;
-    background-color: blue;
-    color: white;
-    border: none;
+  .buttons {
+    display: flex;
+    justify-content: space-between;
   }
   
   .reviewButton:hover {
@@ -91,7 +87,7 @@
     position: absolute;
     top: 14px;
     left: 100%;
-    width: 100%;
+    width: 60px;
     height: 2px;
     background: #e0e0e0;
     z-index: -1;

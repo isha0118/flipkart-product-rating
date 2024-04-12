@@ -6,8 +6,13 @@ import "./App.css";
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showSnackbar, setShowSnackbar] = useState(false);
   const submitReview = () => {
+    setShowSnackbar(true);
     setSelectedProduct(null);
+    setTimeout(() => {
+      setShowSnackbar(false);
+    }, 3000);
   };
   return (
     <>
@@ -24,6 +29,11 @@ function App() {
             <ReviewScreen product={selectedProduct} submitReview={submitReview}/>
           </aside>
         )}
+        {showSnackbar && (
+        <div className="snackbar show">
+          Review for product is submitted successfully!
+        </div>
+      )}
       </main>
     </>
   );

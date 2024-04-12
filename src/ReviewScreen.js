@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ReviewScreen.css"; 
 
 import starEmpty from "./assets/star-empty.svg";
@@ -10,6 +10,14 @@ function ReviewScreen({ product, submitReview }) {
   const [reviewText, setReviewText] = useState("");
   const [reviewError, setReviewError] = useState(false); 
   const [ratingError, setRatingError] = useState("");
+
+  useEffect(() => {
+    setCurrentStep(1);
+    setRating(0);
+    setReviewText("");
+    setRatingError(false);
+    setReviewError(false);
+  }, [product]);
 
   const handleStarClick = (starNumber) => {
     setRating(starNumber);
@@ -82,7 +90,10 @@ function ReviewScreen({ product, submitReview }) {
             className="review-textarea"
           />
           {reviewError && <div className="error-message">Review must be at least 100 characters.</div>}
+          <div className="buttons">
+          <button className="next-btn" onClick={() => (setCurrentStep(1))}>Previous</button>
           <button className="next-btn" onClick={submitReview_}>Submit</button>
+          </div>
         </div>
       )}
     </div>
