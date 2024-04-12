@@ -6,7 +6,6 @@ import './Header.css'; // Importing the CSS for styling
 import flipkartLogo from "./assets/flipkart-logo-39904.png"
 
 function Header() {
-  const path = "/Users/isha/flipkart-product-review/src/assets/flipkart-logo-39904.png";
   return (
     <header className="header">
       <img src={flipkartLogo} alt="Flipkart Logo" className="logo" />
