@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Loader from './ Loader';
+import Loader from "./ Loader";
 import './ProductList.css';
-import errorIcon from "./assets/error.png"
+import errorIcon from "./assets/error.png";
 
-function ProductList({ onSelectProduct, onLoadingComplete }) {
+function ProductList({ onSelectProduct, onLoadingComplete, selectedProductId }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,7 +21,10 @@ function ProductList({ onSelectProduct, onLoadingComplete }) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      setProducts(data);
+      const finalData = data.map((obj, i) => {
+        return { ...obj, id: i };
+      });
+      setProducts(finalData);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -29,13 +32,12 @@ function ProductList({ onSelectProduct, onLoadingComplete }) {
       onLoadingComplete && onLoadingComplete(); // Notify parent component that loading is complete
     }
   };
-  
 
   const getImageUrl = (url, width, height, quality) => {
     return url.replace('{@width}', width).replace('{@height}', height).replace('{@quality}', quality);
   };
 
-  if (loading) return <Loader />; // Use the Loader component when loading
+  if (loading) return <Loader />;
   if (error) {
     return (
       <div className="errorContainer">
@@ -46,18 +48,21 @@ function ProductList({ onSelectProduct, onLoadingComplete }) {
     );
   }
 
-
   return (
     <ul className="productList">
       {products.map(product => (
-        <li key={product.id} onClick={() => onSelectProduct(product)} className="productItem">
+        <li 
+          key={product.id} 
+          onClick={() => onSelectProduct(product)}
+          className={`productItem ${product.id === selectedProductId ? 'selected' : ''}`}
+        >
           <img src={getImageUrl(product.image, '150', '150', '80')} alt={product.title} />
-          <h3>{product.title}</h3>
-          <p>{product.subTitle.join(', ')}</p>
-          <div className="rnp">
-          <p className="rating">{product.rating}</p>
-          <p>₹{product.price}</p>
-          </div>
+            <h3>{product.title}</h3>
+            <p>{product.subTitle.join(', ')}</p>
+            <div className="rnp">
+              <p className="rating">{product.rating}</p>
+              <p>₹{product.price}</p>
+            </div>
         </li>
       ))}
     </ul>

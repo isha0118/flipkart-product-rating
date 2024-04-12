@@ -11,12 +11,12 @@ function App() {
     <>
       <Header />
       <main className="appContainer">
-        {/* Render the full-width ProductList if no product is selected */}
         <section className={selectedProduct ? "section" : "fullWidthSection"}>
-          <ProductList onSelectProduct={setSelectedProduct} />
+        <ProductList
+            onSelectProduct={setSelectedProduct}
+            selectedProductId={selectedProduct && selectedProduct.id}
+          />
         </section>
-        
-        {/* Conditionally render the ReviewScreen if a product is selected */}
         {selectedProduct && (
           <aside className="aside">
             <ReviewScreen product={selectedProduct} />

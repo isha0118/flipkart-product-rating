@@ -17,6 +17,10 @@
     }
   }
   
+  .productItem.selected {
+    background-color: #f0f0f0; /* Or any other greyish tone to match the design */
+  }
+  
   .productItem:hover {
     background-color: #f0f0f0;
   }

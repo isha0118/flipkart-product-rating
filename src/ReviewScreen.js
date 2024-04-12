@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ReviewScreen.css'; // Make sure this CSS file contains all necessary styles
+import './ReviewScreen.css'; // Ensure your CSS styles are defined as per the design
 
 // Importing star images
 import starEmpty from "./assets/star-empty.svg";
@@ -10,10 +10,12 @@ function ReviewScreen({ product }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
+  const [ratingError, setRatingError] = useState(false);
 
   // Function to handle star click
   const handleStarClick = (starNumber) => {
     setRating(starNumber);
+    setRatingError(false); // Reset error when user selects a rating
   };
 
   // Function to render star images
@@ -23,8 +25,8 @@ function ReviewScreen({ product }) {
       stars.push(
         <img 
           key={i} 
-          src={i <= rating ? starFilled : starEmpty} 
-          alt={`star ${i}`} 
+          src={rating >= i ? starFilled : starEmpty} 
+          alt={`${i} Star`} 
           onClick={() => handleStarClick(i)}
           className="star"
         />
@@ -36,10 +38,10 @@ function ReviewScreen({ product }) {
   // Function to go to next step
   const goToNextStep = () => {
     if (currentStep === 1 && rating === 0) {
-      // Show error if no rating given
-      return;
+      setRatingError(true); // Show error if no rating given
+    } else {
+      setCurrentStep(currentStep + 1);
     }
-    setCurrentStep(currentStep + 1);
   };
 
   // Function to go to previous step
@@ -49,13 +51,7 @@ function ReviewScreen({ product }) {
 
   // Function to submit the review
   const submitReview = () => {
-    if (reviewText.trim().length === 0 || reviewText.trim().length > 100) {
-      // Show error if no review text or text is too long
-      return;
-    }
-    // Save review to local storage or state
-    console.log('Submit review:', { rating, reviewText });
-    // Reset state or handle submission
+    // Validate the review text and submit the review
   };
 
   return (
@@ -64,18 +60,19 @@ function ReviewScreen({ product }) {
         <div className="progress-bar" style={{ width: `${currentStep / 3 * 100}%` }}></div>
       </div>
       <div className="steps">
-        <div className={currentStep === 1 ? 'step active' : 'step'}>1 Rating</div>
-        <div className={currentStep === 2 ? 'step active' : 'step'}>2 Review</div>
-        <div className={currentStep === 3 ? 'step active' : 'step'}>3 Summary</div>
+        <div className={`step ${currentStep === 1 ? 'active' : ''}`}>1 Rating</div>
+        <div className={`step ${currentStep === 2 ? 'active' : ''}`}>2 Review</div>
+        <div className={`step ${currentStep === 3 ? 'active' : ''}`}>3 Summary</div>
       </div>
       {currentStep === 1 && (
         <div className="rating-step">
           <p>Please provide your rating</p>
           <div className="stars">{renderStars()}</div>
+          {ratingError && <img src={starError} alt="Error" className="error-icon" />}
           <button className="next-btn" onClick={goToNextStep}>Next</button>
         </div>
       )}
-      {/* Include additional components or divs for step 2 (Review) and 3 (Summary) */}
+      {/* Handle additional steps (2 and 3) here */}
     </div>
   );
 }
