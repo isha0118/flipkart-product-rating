@@ -1,61 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import './ReviewScreen.css';
+import React, { useState } from 'react';
+import './ReviewScreen.css'; // Make sure this CSS file contains all necessary styles
+
+// Importing star images
+import starEmpty from "./assets/star-empty.svg";
+import starFilled from './assets/star-filled.svg';
+import starError from './assets/star-error.svg';
 
 function ReviewScreen({ product }) {
-  const [step, setStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1);
   const [rating, setRating] = useState(0);
-  const [review, setReview] = useState('');
+  const [reviewText, setReviewText] = useState('');
 
-  useEffect(() => {
-    const savedReview = localStorage.getItem(product.id);
-    if (savedReview) {
-      const { rating, review } = JSON.parse(savedReview);
-      setRating(rating);
-      setReview(review);
-    }
-  }, [product.id]);
-
-  const handleNext = () => {
-    if (step === 1 && rating === 0) {
-      alert('Please select a rating.');
-    } else {
-      setStep(2);
-    }
+  // Function to handle star click
+  const handleStarClick = (starNumber) => {
+    setRating(starNumber);
   };
 
-  const handlePrevious = () => {
-    setStep(1);
+  // Function to render star images
+  const renderStars = () => {
+    let stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <img 
+          key={i} 
+          src={i <= rating ? starFilled : starEmpty} 
+          alt={`star ${i}`} 
+          onClick={() => handleStarClick(i)}
+          className="star"
+        />
+      );
+    }
+    return stars;
   };
 
-  const handleSubmit = () => {
-    if (review.length === 0 || review.length > 100) {
-      alert('Review must be between 1 and 100 characters.');
-    } else {
-      localStorage.setItem(product.id, JSON.stringify({ rating, review }));
-      alert('Review submitted successfully!');
-      setStep(1);
-      setRating(0);
-      setReview('');
+  // Function to go to next step
+  const goToNextStep = () => {
+    if (currentStep === 1 && rating === 0) {
+      // Show error if no rating given
+      return;
     }
+    setCurrentStep(currentStep + 1);
+  };
+
+  // Function to go to previous step
+  const goToPreviousStep = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  // Function to submit the review
+  const submitReview = () => {
+    if (reviewText.trim().length === 0 || reviewText.trim().length > 100) {
+      // Show error if no review text or text is too long
+      return;
+    }
+    // Save review to local storage or state
+    console.log('Submit review:', { rating, reviewText });
+    // Reset state or handle submission
   };
 
   return (
-    <div className="reviewContainer">
-      {step === 1 ? (
-        <>
-          <div className="reviewHeader">Rate the Product</div>
-          <input className="reviewInput" type="number" value={rating} onChange={(e) => setRating(parseInt(e.target.value))} />
-          <button className="reviewButton" onClick={handleNext}>Next</button>
-        </>
-      ) : (
-        <>
-          <div className="reviewHeader">Write a Review</div>
-          <div>Rating: {rating}</div>
-          <textarea className="reviewTextarea" value={review} onChange={(e) => setReview(e.target.value)} maxLength="100" />
-          <button className="reviewButton" onClick={handlePrevious}>Previous</button>
-          <button className="reviewButton" onClick={handleSubmit}>Submit</button>
-        </>
+    <div className="review-screen">
+      <div className="progress-bar-container">
+        <div className="progress-bar" style={{ width: `${currentStep / 3 * 100}%` }}></div>
+      </div>
+      <div className="steps">
+        <div className={currentStep === 1 ? 'step active' : 'step'}>1 Rating</div>
+        <div className={currentStep === 2 ? 'step active' : 'step'}>2 Review</div>
+        <div className={currentStep === 3 ? 'step active' : 'step'}>3 Summary</div>
+      </div>
+      {currentStep === 1 && (
+        <div className="rating-step">
+          <p>Please provide your rating</p>
+          <div className="stars">{renderStars()}</div>
+          <button className="next-btn" onClick={goToNextStep}>Next</button>
+        </div>
       )}
+      {/* Include additional components or divs for step 2 (Review) and 3 (Summary) */}
     </div>
   );
 }
