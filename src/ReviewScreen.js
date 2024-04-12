@@ -1,44 +1,30 @@
 import React, { useState } from 'react';
-import './ReviewScreen.css'; // Ensure your CSS styles are defined as per the design
+import './ReviewScreen.css'; 
 
-// Importing star images
 import starEmpty from "./assets/star-empty.svg";
 import starFilled from './assets/star-filled.svg';
 import starError from './assets/star-error.svg';
 
-function ReviewScreen({ product }) {
+function ReviewScreen({ product, submitReview }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
-  const [reviewError, setReviewError] = useState(false); // State to manage review error
+  const [reviewError, setReviewError] = useState(false); 
   const [ratingError, setRatingError] = useState("");
 
-  // Function to handle star click
   const handleStarClick = (starNumber) => {
     setRating(starNumber);
-    if (currentStep === 1) setRatingError(false); // Reset error when user selects a rating
+    if (currentStep === 1) setRatingError(false); 
   };
 
-  // Function to go to next step
   const goToNextStep = () => {
     if (currentStep === 1 && rating === 0) {
-      setRatingError(true); // Show error if no rating given
+      setRatingError(true); 
     } else if (currentStep === 2 && reviewText.trim().length < 100) {
-      setReviewError(true); // Show error if review text is less than 100 characters
+      setReviewError(true); 
     } else {
       setReviewError(false);
       setCurrentStep(currentStep + 1);
-    }
-  };
-
-  // Function to submit the review
-  const submitReview = () => {
-    if (reviewText.trim().length >= 100) {
-      // Save review to local storage or state
-      localStorage.setItem(`review_${product.id}`, JSON.stringify({ rating, reviewText }));
-      setCurrentStep(currentStep + 1); // Move to summary step or handle as needed
-    } else {
-      setReviewError(true); // Show error if review text is less than 100 characters
     }
   };
 
@@ -70,7 +56,7 @@ function ReviewScreen({ product }) {
         <div className={`step ${currentStep === 3 ? 'active' : ''}`}>3 Summary</div>
       </div>
       {currentStep === 1 && (
-        <div className="rating-step">
+        <div className="review-step">
           <p>Please provide your rating</p>
           <div className="stars">{renderStars()}</div>
           {ratingError && <div className="error-message">Please select a star rating.</div>}
@@ -83,16 +69,11 @@ function ReviewScreen({ product }) {
           <textarea 
             value={reviewText} 
             onChange={(e) => setReviewText(e.target.value)} 
-            maxLength="1000" // Set maximum length to your preference
+            maxLength="1000" 
             className="review-textarea"
           />
           {reviewError && <div className="error-message">Review must be at least 100 characters.</div>}
           <button className="next-btn" onClick={submitReview}>Submit</button>
-        </div>
-      )}
-      {currentStep === 3 && (
-        <div className="summary-step">
-          {/* Summary content */}
         </div>
       )}
     </div>

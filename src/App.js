@@ -6,7 +6,9 @@ import './App.css';
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  const submitReview = () => {
+    setSelectedProduct(null);
+  };
   return (
     <>
       <Header />
@@ -19,7 +21,7 @@ function App() {
         </section>
         {selectedProduct && (
           <aside className="aside">
-            <ReviewScreen product={selectedProduct} />
+            <ReviewScreen product={selectedProduct} submitReview={submitReview}/>
           </aside>
         )}
       </main>
